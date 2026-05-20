@@ -3,66 +3,144 @@
 
 <head>
     <title>Cybersecurity Quiz</title>
+
+    <style>
+        .correct {
+            color: green;
+        }
+
+        .wrong {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
 
     <h1 align="center">Cybersecurity Quiz</h1>
 
-    <form>
+    <form id="quizForm">
 
+        <!-- Question 1 -->
         <h3>1. What does HTML stand for?</h3>
 
-        <input type="radio" name="q1"> Hyper Text Markup Language<br>
-        <input type="radio" name="q1"> High Transfer Machine Language<br>
-        <input type="radio" name="q1"> Hyperlink Text Machine Language<br>
-        <input type="radio" name="q1"> Home Tool Markup Language<br><br>
+        <input type="radio" name="q1" value="a"> Hyper Text Markup Language<br>
+        <input type="radio" name="q1" value="b"> High Transfer Machine Language<br>
+        <input type="radio" name="q1" value="c"> Hyperlink Text Machine Language<br>
+        <input type="radio" name="q1" value="d"> Home Tool Markup Language<br>
 
         <hr>
 
+        <!-- Question 2 -->
         <h3>2. Which of the following is a strong password?</h3>
 
-        <input type="radio" name="q2"> 123456<br>
-        <input type="radio" name="q2"> password<br>
-        <input type="radio" name="q2"> S@fe1234<br>
-        <input type="radio" name="q2"> abc123<br><br>
+        <input type="radio" name="q2" value="a"> 123456<br>
+        <input type="radio" name="q2" value="b"> password<br>
+        <input type="radio" name="q2" value="c"> S@fe1234<br>
+        <input type="radio" name="q2" value="d"> abc123<br>
 
         <hr>
 
+        <!-- Question 3 -->
         <h3>3. Which device is commonly used in IoT projects?</h3>
 
-        <input type="radio" name="q3"> Arduino<br>
-        <input type="radio" name="q3"> Printer<br>
-        <input type="radio" name="q3"> Scanner<br>
-        <input type="radio" name="q3"> Keyboard<br><br>
+        <input type="radio" name="q3" value="a"> Arduino<br>
+        <input type="radio" name="q3" value="b"> Printer<br>
+        <input type="radio" name="q3" value="c"> Scanner<br>
+        <input type="radio" name="q3" value="d"> Keyboard<br>
 
         <hr>
 
+        <!-- Question 4 -->
         <h3>4. Blockchain is mainly used for?</h3>
 
-        <input type="radio" name="q4"> Secure transactions<br>
-        <input type="radio" name="q4"> Video editing<br>
-        <input type="radio" name="q4"> Gaming only<br>
-        <input type="radio" name="q4"> Drawing graphics<br><br>
+        <input type="radio" name="q4" value="a"> Secure transactions<br>
+        <input type="radio" name="q4" value="b"> Video editing<br>
+        <input type="radio" name="q4" value="c"> Gaming only<br>
+        <input type="radio" name="q4" value="d"> Typing documents<br>
 
         <hr>
 
-        <h3>5. Which one is a cybersecurity threat?</h3>
+        <!-- Question 5 -->
+        <h3>5. Which tag is used to create a paragraph in HTML?</h3>
 
-        <input type="radio" name="q5"> Malware<br>
-        <input type="radio" name="q5"> Keyboard<br>
-        <input type="radio" name="q5"> Monitor<br>
-        <input type="radio" name="q5"> Printer<br><br>
+        <input type="radio" name="q5" value="a"> &lt;h1&gt;<br>
+        <input type="radio" name="q5" value="b"> &lt;p&gt;<br>
+        <input type="radio" name="q5" value="c"> &lt;img&gt;<br>
+        <input type="radio" name="q5" value="d"> &lt;table&gt;<br>
 
-        <center>
-            <input type="submit" value="Submit Quiz">
-        </center>
+        <hr>
+
+        <input type="submit" value="Submit Quiz">
 
     </form>
 
-    <hr>
+    <div id="result"></div>
 
-    <h2 align="center">Thank You for Participating!</h2>
+    <script>
+
+        document.getElementById("quizForm").addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            const answers = {
+                q1: "a",
+                q2: "c",
+                q3: "a",
+                q4: "a",
+                q5: "b"
+            };
+
+            const correctText = {
+                q1: "Hyper Text Markup Language",
+                q2: "S@fe1234",
+                q3: "Arduino",
+                q4: "Secure transactions",
+                q5: "<p>"
+            };
+
+            let output = "<h2>Quiz Results</h2>";
+
+            let score = 0;
+
+            for (let question in answers) {
+
+                let userAnswer = document.querySelector(`input[name="${question}"]:checked`);
+
+                if (userAnswer) {
+
+                    if (userAnswer.value === answers[question]) {
+
+                        output += `<p class="correct">${question.toUpperCase()} Correct</p>`;
+                        score++;
+
+                    } else {
+
+                        output += `
+                        <p class="wrong">
+                        ${question.toUpperCase()} Wrong.<br>
+                        Correct Answer: ${correctText[question]}
+                        </p>`;
+                    }
+
+                } else {
+
+                    output += `
+                    <p class="wrong">
+                    ${question.toUpperCase()} Not Answered.<br>
+                    Correct Answer: ${correctText[question]}
+                    </p>`;
+                }
+            }
+
+            output += `<h3>Your Score: ${score}/5</h3>`;
+            output += `<h2 align="center">Thank You for Participating!</h2>`;
+
+            document.getElementById("result").innerHTML = output;
+
+        });
+
+    </script>
 
 </body>
 
